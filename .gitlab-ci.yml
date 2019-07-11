@@ -1,0 +1,76 @@
+image: node:8-alpine
+
+cache:
+  paths:
+    - node_modules/
+    - dist/
+
+before_script:
+  - npm install -g @angular/cli@7.3.8 --no-optional
+
+stages:
+  - install
+  - lint
+  - build
+  - test
+  - deploy
+
+install:
+  stage: install
+  before_script: []
+  script:
+    - npm install --no-optional
+
+lint:
+  stage: lint
+  script:
+    - ng lint
+    - npm audit
+  allow_failure: true
+
+build:
+  stage: build
+  script:
+    - ng build --prod --build-optimizer
+    - mv dist/dist dist/dist-root
+  artifacts:
+    name: "$CI_PROJECT_NAME-${CI_COMMIT_REF_NAME}"
+    paths:
+      - dist/
+    expire_in: 20 yrs
+
+test:
+  before_script:
+    - apk --no-cache add chromium xvfb
+    - export CHROME_BIN=/usr/bin/chromium-browser
+    - export CHROME_PATH=/usr/lib/chromium/
+    # Launch Xvfb
+    - Xvfb :0 -ac -screen 0 1024x768x24 &
+    # Export display for Chrome
+    - export DISPLAY=:99
+    - npm install -g @angular/cli --no-optional
+  stage: test
+  script:
+    - echo test
+    # - ng test
+    # - ng e2e
+
+deploy-image-branches:
+  image: docker:latest
+  services:
+    - docker:dind
+  variables:
+    DOCKER_DRIVER: overlay2
+    DOCKER_REGISTRY: 'registry.gitlab.com/patricioperpetua/web'
+  stage: deploy
+  before_script:
+    - docker login registry.gitlab.com -u ${REGISTRY_GITLAB_USER} -p ${REGISTRY_GITLAB_PASS}
+    - apk add --no-cache bash curl gawk git sed util-linux pciutils usbutils coreutils binutils findutils grep
+  script:
+    - if [ "${CI_COMMIT_REF_NAME}" == "master" ]; then
+        export DOCKER_IMAGE_TAG=latest;
+      else
+        export DOCKER_IMAGE_TAG=${CI_COMMIT_REF_NAME};
+      fi
+    - ./scripts/generate_docker_image.sh ${DOCKER_REGISTRY} ${DOCKER_IMAGE_TAG} ${CI_COMMIT_SHA} 1
+  when: on_success

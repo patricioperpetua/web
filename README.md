@@ -1,27 +1,57 @@
-# Web
+# Patricio PERPETUA Angular Web
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 7.3.9.
+----------------------
 
-## Development server
+## OVERVIEW
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+This project contains my personal web page [patricioperpetua.com](patricioperpetua.com). It is generated using Angular and deployed to Amazon Amplify.
 
-## Code scaffolding
+> The **main repository** is hosted in [gitlab.com](https://gitlab.com/patricioperpetua/web) but it is automaticaly mirrored to [github.com](https://github.com/patricioperpetua/web.git). If you are in the Github page it may occur that is not updated to the last version.
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+This web is also deployed to gitlab pages, you can check it in [https://patricioperpetua.gitlab.io/web/](https://patricioperpetua.gitlab.io/web/)
 
-## Build
+### STRUCTURE
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `--prod` flag for a production build.
+This web load my personal resume generated in html format and in pdf [(see this repository to more info)](https://gitlab.com/patricioperpetua/resume). Also allows to download it and see more information about my projects.
 
-## Running unit tests
+## BRANCHING MODEL
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+* Default branch when pull is **DEVELOP**.
+* Master branch is protected and it is not possible to push. Create a merge request instead.
 
-## Running end-to-end tests
+## DEPLOYMENT
 
-Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
+For each commit to master branck it will deploy to amazon Amplify.
 
-## Further help
+### CONFIGURATION
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
+#### AMAZON Amplify
+
+Follow [this guide](https://support.infinitewp.com/support/solutions/articles/212258-where-are-my-amazon-s3-credentials-) to create a bucket inside amazon s3 and create a user with read and write access. Then save the **Access key ID and Secret access key** as
+ following: **AMAZON_S3_RESUME_WR_ACCESS_KEY_ID** and **AMAZON_S3_RESUME_WR_SECRET_ACCESS_KEY**.
+
+### LOCATIONS OF FILES
+
+* **MASTER BRANCH:** under path /latest/
+
+* **DEVELOP BRANCH:** under path /develop/
+
+* **TAGS:** under path /${TAG_NAME}/
+
+## DOCKER IMAGES
+
+The image name is: **patricioperpetua/web**. [See Registry](https://gitlab.com/patricioperpetua/web/container_registry). Tags are the same names as files locations described above.
+
+The image is based of an nginx image to display the static web page.
+
+## TODO
+
+* [ ] Change scripts from bash to nodejs.
+* [ ] Document how to use repository.
+* [ ] Config gitlab ci/cd.
+* [ ] Add amazon amplify deployer.
+* [ ] Add docker support.
+
+----------------------
+
+© [Patricio Perpetua](http://patricioperpetua.com), Italy, 2019.
