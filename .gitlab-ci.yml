@@ -13,6 +13,7 @@ stages:
   - lint
   - build
   - test
+  - pages
   - deploy
 
 install:
@@ -28,7 +29,7 @@ lint:
     - npm audit
   allow_failure: true
 
-pages:
+build:
   stage: build
   script:
     - rm -r dist/
@@ -39,10 +40,7 @@ pages:
   artifacts:
     name: "$CI_PROJECT_NAME-${CI_COMMIT_REF_NAME}"
     paths:
-      - /dist/
-  cache:
-    paths:
-      - /public/
+      - dist
 
 test:
   before_script:
@@ -59,6 +57,21 @@ test:
     - echo test
     # - ng test
     # - ng e2e
+
+pages:
+  stage: pages
+  script:
+    - mkdir public
+    - cp -r dist/dist-root/* public
+  artifacts:
+    name: "$CI_PROJECT_NAME-${CI_COMMIT_REF_NAME}"
+    paths:
+      - dist
+  cache:
+    paths:
+      - public
+  only:
+  - master
 
 deploy-image-branches:
   image: docker:latest
