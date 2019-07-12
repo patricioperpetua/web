@@ -1,28 +1,27 @@
-import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
+import { BrowserModule } from '@angular/platform-browser';
 
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
-import { NavbarComponent } from './components/layout/navbar/navbar.component';
 import { LayoutModule } from '@angular/cdk/layout';
+import { NavbarComponent } from './components/layout/navbar/navbar.component';
 
-import { MatToolbarModule, MatButtonModule, MatSidenavModule, MatIconModule, MatListModule } from '@angular/material';
+import { MatButtonModule, MatIconModule, MatListModule, MatSidenavModule, MatToolbarModule } from '@angular/material';
 
+import { HttpClient } from '@angular/common/http';
 import { TranslateLoader, TranslateModule, TranslateService } from '@ngx-translate/core';
 import { HttpLoaderFactory, LanguageService } from './services/language/language.service';
-import { HttpClient } from '@angular/common/http';
 
 import { LoggerModule, NgxLoggerLevel } from 'ngx-logger';
 
-import { HomeComponent } from './components/pages/home/home.component';
-import { TechnologiesComponent } from './components/pages/technologies/technologies.component';
-import { AboutComponent } from './components/pages/about/about.component';
-import { GalleryComponent } from './components/pages/gallery/gallery.component';
 import { FooterComponent } from './components/layout/footer/footer.component';
 import { MainComponent } from './components/layout/main/main.component';
-
+import { AboutComponent } from './components/pages/about/about.component';
+import { GalleryComponent } from './components/pages/gallery/gallery.component';
+import { HomeComponent } from './components/pages/home/home.component';
+import { TechnologiesComponent } from './components/pages/technologies/technologies.component';
 
 @NgModule({
   declarations: [
@@ -57,7 +56,7 @@ import { MainComponent } from './components/layout/main/main.component';
       level: NgxLoggerLevel.TRACE,
       // serverLogLevel: NgxLoggerLevel.ERROR,
       disableConsoleLogging: false
-    }),
+    })
   ],
   providers: [
     LanguageService

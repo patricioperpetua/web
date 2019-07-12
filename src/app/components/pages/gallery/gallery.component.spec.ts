@@ -2,7 +2,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { GalleryComponent } from './gallery.component';
 
-describe('GaleryComponent', () => {
+describe('GalleryComponent', () => {
   let component: GalleryComponent;
   let fixture: ComponentFixture<GalleryComponent>;
 
@@ -10,7 +10,8 @@ describe('GaleryComponent', () => {
     TestBed.configureTestingModule({
       declarations: [ GalleryComponent ]
     })
-    .compileComponents();
+    .compileComponents()
+    .catch(() => {});
   }));
 
   beforeEach(() => {
@@ -20,6 +21,8 @@ describe('GaleryComponent', () => {
   });
 
   it('should create', () => {
-    expect(component).toBeTruthy();
+    expect(component)
+    .toBeTruthy()
+    .catch(() => {});
   });
 });

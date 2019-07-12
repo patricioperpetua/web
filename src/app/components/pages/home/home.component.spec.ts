@@ -10,7 +10,8 @@ describe('HomeComponent', () => {
     TestBed.configureTestingModule({
       declarations: [ HomeComponent ]
     })
-    .compileComponents();
+    .compileComponents()
+    .catch(() => {});
   }));
 
   beforeEach(() => {
@@ -20,6 +21,8 @@ describe('HomeComponent', () => {
   });
 
   it('should create', () => {
-    expect(component).toBeTruthy();
+    expect(component)
+    .toBeTruthy()
+    .catch(() => {});
   });
 });

@@ -10,7 +10,8 @@ describe('FooterComponent', () => {
     TestBed.configureTestingModule({
       declarations: [ FooterComponent ]
     })
-    .compileComponents();
+    .compileComponents()
+    .catch(() => {});
   }));
 
   beforeEach(() => {
@@ -20,6 +21,8 @@ describe('FooterComponent', () => {
   });
 
   it('should create', () => {
-    expect(component).toBeTruthy();
+    expect(component)
+    .toBeTruthy()
+    .catch(() => {});
   });
 });

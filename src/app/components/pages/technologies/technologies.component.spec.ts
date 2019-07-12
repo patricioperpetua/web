@@ -10,7 +10,8 @@ describe('TechnologiesComponent', () => {
     TestBed.configureTestingModule({
       declarations: [ TechnologiesComponent ]
     })
-    .compileComponents();
+    .compileComponents()
+    .catch(() => {});
   }));
 
   beforeEach(() => {
@@ -20,6 +21,8 @@ describe('TechnologiesComponent', () => {
   });
 
   it('should create', () => {
-    expect(component).toBeTruthy();
+    expect(component)
+    .toBeTruthy()
+    .catch(() => {});
   });
 });

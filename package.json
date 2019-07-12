@@ -3,11 +3,14 @@
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
+    "check": "npm-check -i @app* -i @user* -i @password* -i @components* -i @services* -i @env",
     "start": "ng serve",
-    "build": "ng build",
+    "build": "ng build --prod",
     "test": "ng test",
     "lint": "ng lint",
-    "e2e": "ng e2e"
+    "e2e": "ng e2e",
+    "docker-generate": "./scripts/generate_docker_image.sh y",
+    "docker-run": "./scripts/run_docker_compose.sh"
   },
   "private": true,
   "dependencies": {
@@ -38,20 +41,23 @@
     "@angular/cli": "~7.3.9",
     "@angular/compiler-cli": "~7.2.0",
     "@angular/language-service": "~7.2.0",
-    "@types/node": "~8.9.4",
     "@types/jasmine": "~2.8.8",
     "@types/jasminewd2": "~2.0.3",
+    "angular-tslint-rules": "1.18.0",
     "codelyzer": "~4.5.0",
     "jasmine-core": "~2.99.1",
     "jasmine-spec-reporter": "~4.2.1",
-    "karma": "~4.0.0",
+    "karma": "4.1.0",
     "karma-chrome-launcher": "~2.2.0",
     "karma-coverage-istanbul-reporter": "~2.0.1",
     "karma-jasmine": "~1.1.2",
     "karma-jasmine-html-reporter": "^0.2.2",
-    "protractor": "~5.4.0",
+    "protractor": "5.4.2",
+    "rxjs-tslint": "0.1.7",
+    "rxjs-tslint-rules": "4.24.3",
     "ts-node": "~7.0.0",
     "tslint": "~5.11.0",
+    "tslint-angular": "3.0.2",
     "typescript": "~3.2.2"
   }
 }
