@@ -28,11 +28,13 @@ lint:
     - npm audit
   allow_failure: true
 
-build:
+pages:
   stage: build
   script:
     - ng build --prod --build-optimizer
     - mv dist/dist dist/dist-root
+    - mkdir public
+    - cp -r dist/dist-root/* public
   artifacts:
     name: "$CI_PROJECT_NAME-${CI_COMMIT_REF_NAME}"
     paths:

@@ -33,7 +33,7 @@ NAME=registry.gitlab.com/patricioperpetua/web
 DOCKERFILE=from_assets
 CI_COMMIT_SHA=$(git rev-parse HEAD | cut -c 1-8)
 PUSH=0
-ASSET_FOLDER="dist/dist-root"
+ASSET_FOLDER="dist-root"
 if [ $# -lt 3 ]; then
   echo -e "Illegal number of parameters"
   echo -e "$(usage)"
