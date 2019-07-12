@@ -40,6 +40,9 @@ pages:
     paths:
       - dist/
     expire_in: 20 yrs
+  cache:
+    paths:
+      - public/
 
 test:
   before_script:
