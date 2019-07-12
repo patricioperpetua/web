@@ -38,10 +38,10 @@ pages:
   artifacts:
     name: "$CI_PROJECT_NAME-${CI_COMMIT_REF_NAME}"
     paths:
-      - dist/
+      - /dist/
   cache:
     paths:
-      - public/
+      - /public/
 
 test:
   before_script:
