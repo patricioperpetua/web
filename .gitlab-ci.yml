@@ -66,9 +66,6 @@ pages:
   artifacts:
     name: "$CI_PROJECT_NAME-${CI_COMMIT_REF_NAME}"
     paths:
-      - dist
-  cache:
-    paths:
       - public
   only:
   - master
