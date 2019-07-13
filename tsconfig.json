@@ -19,8 +19,8 @@
       "dom"
     ],
     "paths": {
-      "@app/*": ["app/*"],
-      "@env/*": ["environments/*"],
+      "@app/*": ["src/app/*"],
+      "@env/*": ["src/environments/*"],
       "@components/*": ["src/app/components/*"],
       "@services/*": ["src/app/services/*"]
     }

@@ -23,13 +23,7 @@ export class NavbarComponent {
 
   downloadResume(): void {
     this.logger.debug('Downloading resume...');
+    window.open('/assets/resume/latest/pdf/Patricio_Perpetua-latest-en-complement.pdf', '_blank');
   }
 
-  seePDFFormat(): void {
-    this.logger.debug('Showing PDF version...');
-  }
-
-  seeHTMLFormat(): void {
-    this.logger.debug('Showing HTML version...');
-  }
 }

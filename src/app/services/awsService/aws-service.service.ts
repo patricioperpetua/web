@@ -11,16 +11,16 @@ import { Files } from './files-model';
 export class AwsServiceService {
 
   FOLDER = 'resume';
-  BUCKET = environment.bucket;
+  BUCKET = ''; // environment.bucket;
 
   constructor() { }
 
   private getS3Bucket(): any {
     const bucket = new S3(
       {
-        accessKeyId: environment.accessKeyId,
-        secretAccessKey: environment.secretAccessKey,
-        region: environment.region
+        // accessKeyId: environment.accessKeyId,
+        // secretAccessKey: environment.secretAccessKey,
+        // region: environment.region
       }
     );
 
