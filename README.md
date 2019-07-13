@@ -1,7 +1,5 @@
 # Patricio PERPETUA Angular Web
 
-----------------------
-
 ## OVERVIEW
 
 This project contains my personal web page [patricioperpetua.com](patricioperpetua.com). It is generated using Angular and deployed to Amazon Amplify.
