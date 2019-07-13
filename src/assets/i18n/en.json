@@ -1,1 +1,23 @@
-{}
+{
+  "translator":{
+    "title": "Language",
+    "languages": {
+      "es": "ES",
+      "en": "EN",
+      "it": "IT",
+      "fr": "FR"
+    }
+  },
+  "tooltips": {
+    "pdf": "See resume in pdf",
+    "html": "See html version",
+    "download": "Download resume",
+    "lang": "Change language"
+  },
+  "home": {
+    "titles": {
+      "resume": "See resume",
+      "portfolio": "See portfolio"
+    }
+  }
+}

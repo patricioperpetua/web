@@ -1,5 +1,8 @@
+// tslint:disable: no-implicit-dependencies
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { Component } from '@angular/core';
+import { LanguageService } from '@services/language/language.service';
+import { NGXLogger } from 'ngx-logger';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
@@ -15,6 +18,18 @@ export class NavbarComponent {
       map(result => result.matches)
     );
 
-  constructor(private readonly breakpointObserver: BreakpointObserver) {}
+  constructor(private readonly breakpointObserver: BreakpointObserver
+            , public readonly logger: NGXLogger) {}
 
+  downloadResume(): void {
+    this.logger.debug('Downloading resume...');
+  }
+
+  seePDFFormat(): void {
+    this.logger.debug('Showing PDF version...');
+  }
+
+  seeHTMLFormat(): void {
+    this.logger.debug('Showing HTML version...');
+  }
 }

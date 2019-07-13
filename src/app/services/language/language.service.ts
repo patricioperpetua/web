@@ -10,6 +10,7 @@ import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 // tslint:disable-next-line: no-implicit-dependencies
 import { NGXLogger } from 'ngx-logger';
 import { BehaviorSubject } from 'rxjs';
+import { ActivatedRoute } from '@angular/router';
 
 const SERVICE_NAME = 'LANGUAGE';
 
@@ -26,6 +27,8 @@ export class LanguageService {
   private readonly languages: BehaviorSubject<Array<string>> = new BehaviorSubject<Array<string>>(['es', 'en']);
 
   private readonly selected: BehaviorSubject<string> = new BehaviorSubject<string>(undefined);
+
+  public readonly availableLanguages: Array<string> = ['es', 'en', 'it', 'fr'];
 
   constructor(private readonly translate: TranslateService
             , private readonly logger: NGXLogger) {

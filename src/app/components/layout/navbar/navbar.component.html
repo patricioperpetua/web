@@ -1,4 +1,4 @@
-<mat-toolbar color="primary">
+<mat-toolbar>
   <button
     type="button"
     aria-label="Toggle sidenav"
@@ -7,5 +7,14 @@
     *ngIf="isHandset$ | async">
     <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
   </button>
-  <span>web</span>
+  <a class="mr-2" [routerLink]="'/home'">Patricio PERPETUA</a>
+  <app-version-selector></app-version-selector>
+  <span style="flex: 1 1 auto"></span>
+  <span *ngIf="!(isHandset$ | async)">
+    <app-language-selector></app-language-selector>
+
+    <button type="button" (click)="downloadResume()" mat-icon-button><mat-icon matTooltip="{{ 'tooltips.download' | translate }}">cloud_download</mat-icon></button>
+    <button type="button" [routerLink]="'/resume/pdf'" mat-icon-button><mat-icon matTooltip="{{ 'tooltips.pdf' | translate }}">picture_as_pdf</mat-icon></button>
+    <button type="button" [routerLink]="'/resume/html'" mat-icon-button><mat-icon matTooltip="{{ 'tooltips.html' | translate }}">find_in_page</mat-icon></button>
+  </span>
 </mat-toolbar>
