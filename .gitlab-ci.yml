@@ -77,7 +77,7 @@ amason_s3:
     - apk add --no-cache bash
     - pip install awscli # Install the SDK
   script:
-    - ./scripts/uploaders/uploader_amazon_s3.sh
+    - ./scripts/uploader_amazon_s3.sh
 
 deploy-image-branches:
   image: docker:latest
