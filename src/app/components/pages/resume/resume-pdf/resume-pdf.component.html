@@ -1,4 +1,9 @@
-<pdf-viewer [src]="'/assets/resume/latest/pdf/Patricio_Perpetua-latest-en-complement.pdf'"
-  [render-text]="true"
-  style="width:100%; height:calc(100% - 120px)"
-></pdf-viewer>
+<div class="text-center" style="height:calc(100% - 120px)">
+  <pdf-viewer [src]="'/assets/resume/latest/pdf/Patricio_Perpetua-latest-en-complement.pdf'"
+    [render-text]="true"
+    [external-link-target]="'blank'"
+    [fit-to-page]="false"
+    [original-size]="false"
+    autofocus
+    style="width:95%; height: 100%;"></pdf-viewer>
+</div>

@@ -1,2 +1,23 @@
 {
+  "translator":{
+    "title": "Lingua",
+    "languages": {
+      "es": "ES",
+      "en": "EN",
+      "it": "IT",
+      "fr": "FR"
+    }
+  },
+  "tooltips": {
+    "pdf": "Vedi il formato pdf",
+    "html": "Vedi il formato html",
+    "download": "Scarica curriculum",
+    "lang": "Cambia lingua"
+  },
+  "home": {
+    "titles": {
+      "resume": "Vedi curriculum",
+      "portfolio": "Vedi portfolio"
+    }
+  }
 }

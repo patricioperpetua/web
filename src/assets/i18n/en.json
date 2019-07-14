@@ -9,8 +9,8 @@
     }
   },
   "tooltips": {
-    "pdf": "See resume in pdf",
-    "html": "See html version",
+    "pdf": "See pdf format",
+    "html": "See html format",
     "download": "Download resume",
     "lang": "Change language"
   },

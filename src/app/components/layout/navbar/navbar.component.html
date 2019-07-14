@@ -1,20 +1,23 @@
 <mat-toolbar>
-  <button
+  <!-- <button
     type="button"
     aria-label="Toggle sidenav"
     mat-icon-button
     (click)="drawer.toggle()"
     *ngIf="isHandset$ | async">
     <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
-  </button>
-  <a class="mr-2" [routerLink]="'/home'">Patricio PERPETUA</a>
-  <app-version-selector></app-version-selector>
-  <span style="flex: 1 1 auto"></span>
+  </button> -->
+  <button mat-icon-button type="button" [routerLink]="'/home'"><mat-icon>home</mat-icon></button>
   <span *ngIf="!(isHandset$ | async)">
+    <a class="mr-2" [routerLink]="'/home'">Patricio PERPETUA</a>
+  </span>
+  <!-- <app-version-selector></app-version-selector> -->
+  <span style="flex: 1 1 auto"></span>
+  <!-- <span *ngIf="!(isHandset$ | async)"> -->
     <app-language-selector></app-language-selector>
 
     <button type="button" (click)="downloadResume()" mat-icon-button><mat-icon matTooltip="{{ 'tooltips.download' | translate }}">cloud_download</mat-icon></button>
     <button type="button" [routerLink]="'/resume/pdf'" mat-icon-button><mat-icon matTooltip="{{ 'tooltips.pdf' | translate }}">picture_as_pdf</mat-icon></button>
     <button type="button" [routerLink]="'/resume/html'" mat-icon-button><mat-icon matTooltip="{{ 'tooltips.html' | translate }}">find_in_page</mat-icon></button>
-  </span>
+  <!-- </span> -->
 </mat-toolbar>
