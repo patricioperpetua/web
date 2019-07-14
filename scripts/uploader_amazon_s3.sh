@@ -18,11 +18,8 @@ __base="$(basename ${__file} .sh)"
 __root="$(cd "$(dirname "${__dir}")" && pwd)"
 
 AMAZON_S3_BUCKET="patricioperpetua.com"
-AMAZON_S3_FOLDER=""
+AMAZON_S3_FOLDER="/"
 
 WEB_FOLDER="dist/dist-root"
 
-aws s3 cp ${WEB_FOLDER} s3://${AMAZON_S3_BUCKET}/${AMAZON_S3_FOLDER} --recursive
-
-# Allow read access to content.
-aws s3api put-object-acl --bucket ${AMAZON_S3_BUCKET} --key ${AMAZON_S3_FOLDER} --acl public-read
+aws s3 cp --acl public-read ${WEB_FOLDER} s3://${AMAZON_S3_BUCKET}${AMAZON_S3_FOLDER} --recursive
