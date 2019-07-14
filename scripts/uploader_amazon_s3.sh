@@ -17,7 +17,7 @@ __file="${__dir}/$(basename "${BASH_SOURCE[0]}")"
 __base="$(basename ${__file} .sh)"
 __root="$(cd "$(dirname "${__dir}")" && pwd)"
 
-AMAZON_S3_BUCKET="patricioperpetuaweb"
+AMAZON_S3_BUCKET="patricioperpetua.com"
 AMAZON_S3_FOLDER=""
 
 WEB_FOLDER="dist/dist"
