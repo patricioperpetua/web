@@ -20,6 +20,6 @@ __root="$(cd "$(dirname "${__dir}")" && pwd)"
 AMAZON_S3_BUCKET="patricioperpetua.com"
 AMAZON_S3_FOLDER=""
 
-WEB_FOLDER="dist/dist"
+WEB_FOLDER="dist/dist-root"
 
 aws s3 cp ${WEB_FOLDER} s3://${AMAZON_S3_BUCKET}/${AMAZON_S3_FOLDER} --recursive
