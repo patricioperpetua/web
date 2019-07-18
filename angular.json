@@ -44,7 +44,7 @@
                 }
               ],
               "assets": [
-                "src/favicon.ico",
+                "src/assets/favicon",
                 "src/assets/i18n"
               ],
               "optimization": true,
