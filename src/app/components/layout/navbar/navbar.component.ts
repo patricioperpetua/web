@@ -1,7 +1,10 @@
 // tslint:disable: no-implicit-dependencies
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
+import { HttpClient } from '@angular/common/http';
 import { Component } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
+import { PathService } from '@app/services/path-service/path.service';
+import { TranslateService } from '@ngx-translate/core';
 import { NGXLogger } from 'ngx-logger';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { filter, map } from 'rxjs/operators';
@@ -23,7 +26,10 @@ export class NavbarComponent {
 
   constructor(private readonly breakpointObserver: BreakpointObserver
             , public  readonly logger: NGXLogger
-            , private readonly router: Router) {
+            , router: Router
+            , translate: TranslateService
+            , http: HttpClient
+            , private readonly pathService: PathService) {
     router.events.pipe(filter(e => e instanceof NavigationEnd))
       .subscribe((e: NavigationEnd) => {
         const pdfRendered = !e.url.toString()
@@ -34,7 +40,7 @@ export class NavbarComponent {
 
   downloadResume(): void {
     this.logger.debug('Downloading resume...');
-    window.open('/assets/resume/latest/pdf/Patricio_Perpetua-latest-en-complement.pdf', '_blank');
+    window.open(this.pathService.getPDFPath());
   }
 
 }

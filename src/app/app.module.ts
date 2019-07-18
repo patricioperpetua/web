@@ -34,6 +34,7 @@ import { ResumeComponent } from './components/pages/resume/resume.component';
 import { SafePipe } from './pipes/safe/safe.pipe';
 
 import { PdfViewerModule } from 'ng2-pdf-viewer';
+import { PathService } from './services/path-service/path.service';
 
 @NgModule({
   declarations: [
@@ -85,7 +86,8 @@ import { PdfViewerModule } from 'ng2-pdf-viewer';
   ],
   providers: [
     TranslateService,
-    LanguageService
+    LanguageService,
+    PathService
   ],
   bootstrap: [AppComponent],
   exports: [
