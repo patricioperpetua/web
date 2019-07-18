@@ -6,6 +6,9 @@
       "en": "EN",
       "it": "IT",
       "fr": "FR"
+    },
+    "not_found": {
+      "resume": "Curriculum non disponibile nella lingua selezionata"
     }
   },
   "tooltips": {

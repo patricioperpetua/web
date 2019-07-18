@@ -6,6 +6,9 @@
       "en": "EN",
       "it": "IT",
       "fr": "FR"
+    },
+    "not_found": {
+      "resume": "Resume not available in selected language"
     }
   },
   "tooltips": {

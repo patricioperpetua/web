@@ -6,6 +6,9 @@
       "en": "EN",
       "it": "IT",
       "fr": "FR"
+    },
+    "not_found": {
+      "resume": "CV non disponible dans la langue sélectionnée"
     }
   },
   "tooltips": {

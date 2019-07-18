@@ -11,13 +11,27 @@
   <span *ngIf="!(isHandset$ | async)">
     <a class="mr-2" [routerLink]="'/home'">Patricio PERPETUA</a>
   </span>
+  <!-- TODO: make this toggle icons work to change version. -->
+  <!-- <mat-button-toggle-group appearance="legacy" name="fontStyle" aria-label="Font Style">
+    <mat-button-toggle value="Complete">
+      <mat-icon style="color: green" matTooltip="{{ 'tooltips.html' | translate }}">wrap_text</mat-icon>
+    </mat-button-toggle>
+    <mat-button-toggle value="Short">
+      <mat-icon style="color: yellow" matTooltip="{{ 'tooltips.html' | translate }}">short_text</mat-icon>
+    </mat-button-toggle>
+  </mat-button-toggle-group> -->
   <!-- <app-version-selector></app-version-selector> -->
   <span style="flex: 1 1 auto"></span>
   <!-- <span *ngIf="!(isHandset$ | async)"> -->
-    <app-language-selector></app-language-selector>
+
+    <ng-container *ngIf="($isPDFRendered | async); else HTMLRender">
+      <button type="button" [routerLink]="'/resume/pdf'" mat-icon-button><mat-icon matTooltip="{{ 'tooltips.pdf' | translate }}">picture_as_pdf</mat-icon></button>
+    </ng-container>
+    <ng-template #HTMLRender>
+      <button type="button" [routerLink]="'/resume/html'" mat-icon-button><mat-icon matTooltip="{{ 'tooltips.html' | translate }}">find_in_page</mat-icon></button>
+    </ng-template>
 
     <button type="button" (click)="downloadResume()" mat-icon-button><mat-icon matTooltip="{{ 'tooltips.download' | translate }}">cloud_download</mat-icon></button>
-    <button type="button" [routerLink]="'/resume/pdf'" mat-icon-button><mat-icon matTooltip="{{ 'tooltips.pdf' | translate }}">picture_as_pdf</mat-icon></button>
-    <button type="button" [routerLink]="'/resume/html'" mat-icon-button><mat-icon matTooltip="{{ 'tooltips.html' | translate }}">find_in_page</mat-icon></button>
+    <app-language-selector></app-language-selector>
   <!-- </span> -->
 </mat-toolbar>
