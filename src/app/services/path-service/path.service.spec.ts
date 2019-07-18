@@ -7,6 +7,8 @@ describe('PathService', () => {
 
   it('should be created', () => {
     const service: PathService = TestBed.get(PathService);
-    expect(service).toBeTruthy();
+    expect(service)
+    .toBeTruthy()
+    .catch();
   });
 });

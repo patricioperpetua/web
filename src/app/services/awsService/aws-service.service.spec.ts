@@ -7,6 +7,8 @@ describe('AwsServiceService', () => {
 
   it('should be created', () => {
     const service: AwsServiceService = TestBed.get(AwsServiceService);
-    expect(service).toBeTruthy();
+    expect(service)
+    .toBeTruthy()
+    .catch();
   });
 });

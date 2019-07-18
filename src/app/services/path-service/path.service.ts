@@ -4,7 +4,7 @@ import { MatSnackBar } from '@angular/material';
 import { NavigationEnd, Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import { NGXLogger } from 'ngx-logger';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, forkJoin, of } from 'rxjs';
 import { filter } from 'rxjs/operators';
 import { LanguageService } from '../language/language.service';
 
@@ -37,73 +37,99 @@ export class PathService {
   constructor(private readonly langService: LanguageService
             , http: HttpClient
             , private readonly logger: NGXLogger
-            , snackBar: MatSnackBar
-            , translate: TranslateService
-            , router: Router) {
-    console.log(this.defaultPDFVersion);
-    console.log(this.defaultHTMLVersion);
+            , private readonly snackBar: MatSnackBar
+            , private readonly translate: TranslateService
+            , private readonly router: Router) {
+    router.events.pipe(filter(e => e instanceof NavigationEnd))
+      .subscribe((e: NavigationEnd) => {
+        const pdfRendered = e.url.toString()
+          .includes('pdf');
+        if (pdfRendered) {
+          if (this.defaultPDFVersion === this.sourceFilePDF.getValue()
+            && this.langService.getCurrentLanguage() !== 'en') {
+              this.showSnackBarError();
+          }
+        } else {
+          if (this.defaultHTMLVersion === this.sourceFileHTML.getValue()
+            && this.langService.getCurrentLanguage() !== 'en') {
+              this.showSnackBarError();
+          }
+        }
+      });
     langService.getCurrentLanguageSubject()
     .subscribe(lang => {
       const newPDFSource = this.sourceMainPath.concat(this.displayedVersion.getValue(),
         '/', this.sourceMainPDFPath, this.sourceName, '-', this.displayedVersion.getValue(), '-', lang, '.pdf');
       const newHTMLSource = this.sourceMainPath.concat(this.displayedVersion.getValue(),
         '/', this.sourceMainHTMLPath, this.sourceName, '-', this.displayedVersion.getValue(), '-', lang, '.html');
+
       let pdfFound = true;
       let htmlFound = true;
       const requests = [];
+
       if (newPDFSource !== this.sourceFilePDF.getValue()) {
         logger.debug('Looking pdf for', lang, 'version of resume');
         requests.push(http.get(newPDFSource, { responseType: 'text' })
-          .subscribe(() => {
-            pdfFound = true;
+          .toPromise()
+          .then(() => {
             logger.debug(lang, 'pdf version of resume FOUND');
             this.sourceFilePDF.next(newPDFSource);
-          }, error => {
+          })
+          .catch(() => {
             pdfFound = false;
-            logger.debug(lang, 'pdf version of resume NOT found');
             if (newPDFSource !== this.defaultPDFVersion) {
+              logger.debug(lang, 'pdf version of resume NOT found');
               this.sourceFilePDF.next(this.defaultPDFVersion);
             }
-          }));
+          })
+        );
       }
       if (newHTMLSource !== this.sourceFileHTML.getValue()) {
         logger.debug('Looking html for', lang, 'version of resume');
         requests.push(http.get(newHTMLSource, { responseType: 'text' })
-          .subscribe(() => {
-            htmlFound = true;
+          .toPromise()
+          .then(() => {
             logger.debug(lang, 'html version of resume FOUND');
             this.sourceFileHTML.next(newHTMLSource);
-          }, error => {
+          })
+          .catch(() => {
             htmlFound = false;
-            logger.debug(lang, 'html version of resume NOT found');
-            if (newHTMLSource !== this.defaultHTMLVersion) {
-              this.sourceFileHTML.next(this.defaultHTMLVersion);
+            if (newPDFSource !== this.defaultPDFVersion) {
+              logger.debug(lang, 'html version of resume NOT found');
+              if (newHTMLSource !== this.defaultHTMLVersion) {
+                this.sourceFileHTML.next(this.defaultHTMLVersion);
+              }
             }
-          }));
+          })
+          );
       }
-      // forkJoin(...requests)
-      //   .subscribe(() => {
-      if (!pdfFound || !htmlFound) {
-        router.events.pipe(filter(e => e instanceof NavigationEnd))
-          .subscribe((e: NavigationEnd) => {
-            const pdfRendered = !e.url.toString()
-              .includes('pdf');
-            if ((pdfRendered && !pdfFound) || (!pdfRendered && !htmlFound)) {
-              translate.get('translator.not_found.resume')
-                .subscribe(text => {
-                  snackBar.open(text, undefined, {
-                    duration: 4 * 1000,
-                    panelClass: ['snackbar']
-                });
-              });
-            }
-          });
-      }
+      forkJoin(requests)
+        .subscribe(() => {
+          const pdfRendered = this.isPDFRendered();
+          if ((pdfRendered && !pdfFound) || (!pdfRendered && !htmlFound)) {
+            this.showSnackBarError();
+          }
+        }
+        );
     });
-    // });
   }
 
   public getPDFPath(): string {
     return this.sourceFilePDF.getValue();
+  }
+
+  public isPDFRendered(): boolean {
+    return this.router.url.toString()
+            .includes('pdf');
+  }
+
+  private showSnackBarError(): void {
+    this.translate.get('translator.not_found.resume')
+      .subscribe(text => {
+        this.snackBar.open(text, undefined, {
+          duration: 4 * 1000,
+          panelClass: ['snackbar']
+      });
+    });
   }
 }

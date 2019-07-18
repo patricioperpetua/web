@@ -10,7 +10,8 @@ describe('LanguageSelectorComponent', () => {
     TestBed.configureTestingModule({
       declarations: [ LanguageSelectorComponent ]
     })
-    .compileComponents();
+    .compileComponents()
+    .catch();
   }));
 
   beforeEach(() => {
@@ -20,6 +21,8 @@ describe('LanguageSelectorComponent', () => {
   });
 
   it('should create', () => {
-    expect(component).toBeTruthy();
+    expect(component)
+      .toBeTruthy()
+      .catch();
   });
 });

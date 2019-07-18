@@ -10,7 +10,8 @@ describe('VersionSelectorComponent', () => {
     TestBed.configureTestingModule({
       declarations: [ VersionSelectorComponent ]
     })
-    .compileComponents();
+    .compileComponents()
+    .catch();
   }));
 
   beforeEach(() => {
@@ -20,6 +21,8 @@ describe('VersionSelectorComponent', () => {
   });
 
   it('should create', () => {
-    expect(component).toBeTruthy();
+    expect(component)
+    .toBeTruthy()
+    .catch();
   });
 });

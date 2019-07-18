@@ -10,7 +10,8 @@ describe('ResumePDFComponent', () => {
     TestBed.configureTestingModule({
       declarations: [ ResumePDFComponent ]
     })
-    .compileComponents();
+    .compileComponents()
+    .catch();
   }));
 
   beforeEach(() => {
@@ -20,6 +21,8 @@ describe('ResumePDFComponent', () => {
   });
 
   it('should create', () => {
-    expect(component).toBeTruthy();
+    expect(component)
+    .toBeTruthy()
+    .catch();
   });
 });

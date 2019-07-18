@@ -10,7 +10,6 @@ import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 // tslint:disable-next-line: no-implicit-dependencies
 import { NGXLogger } from 'ngx-logger';
 import { BehaviorSubject } from 'rxjs';
-import { ActivatedRoute } from '@angular/router';
 
 const SERVICE_NAME = 'LANGUAGE';
 

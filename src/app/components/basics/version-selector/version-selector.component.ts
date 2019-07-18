@@ -9,7 +9,7 @@ export class VersionSelectorComponent implements OnInit {
 
   constructor() { }
 
-  ngOnInit() {
+  ngOnInit(): void {
   }
 
 }

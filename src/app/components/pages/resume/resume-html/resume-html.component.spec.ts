@@ -10,7 +10,8 @@ describe('ResumeHTMLComponent', () => {
     TestBed.configureTestingModule({
       declarations: [ ResumeHTMLComponent ]
     })
-    .compileComponents();
+    .compileComponents()
+    .catch();
   }));
 
   beforeEach(() => {
@@ -20,6 +21,8 @@ describe('ResumeHTMLComponent', () => {
   });
 
   it('should create', () => {
-    expect(component).toBeTruthy();
+    expect(component)
+    .toBeTruthy()
+    .catch();
   });
 });

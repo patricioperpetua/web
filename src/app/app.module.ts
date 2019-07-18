@@ -7,8 +7,8 @@ import { AppComponent } from './app.component';
 
 import { LayoutModule } from '@angular/cdk/layout';
 
-import { MatButtonModule, MatIconModule, MatListModule, MatMenuModule, MatSelectModule
-  , MatSidenavModule, MatToolbarModule, MatTooltipModule, MatButtonToggleModule, MatSnackBarModule } from '@angular/material';
+import { MatButtonModule, MatButtonToggleModule, MatIconModule, MatListModule, MatMenuModule
+  , MatSelectModule, MatSidenavModule, MatSnackBarModule, MatToolbarModule, MatTooltipModule } from '@angular/material';
 
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { TranslateLoader, TranslateModule, TranslateService } from '@ngx-translate/core';

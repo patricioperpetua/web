@@ -10,7 +10,8 @@ describe('ResumeComponent', () => {
     TestBed.configureTestingModule({
       declarations: [ ResumeComponent ]
     })
-    .compileComponents();
+    .compileComponents()
+    .catch();
   }));
 
   beforeEach(() => {
@@ -20,6 +21,8 @@ describe('ResumeComponent', () => {
   });
 
   it('should create', () => {
-    expect(component).toBeTruthy();
+    expect(component)
+    .toBeTruthy()
+    .catch();
   });
 });
