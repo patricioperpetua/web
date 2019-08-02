@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { Meta } from '@angular/platform-browser';
-import { Router, NavigationEnd } from '@angular/router';
+import { NavigationEnd, Router } from '@angular/router';
 
 declare let gtag: Function;
 
