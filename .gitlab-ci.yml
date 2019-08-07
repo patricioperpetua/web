@@ -16,9 +16,9 @@ stages:
   - lint
   - build
   - test
-  - deploy
+  - pre_deploy
   - performance
-  - post_deploy
+  - deploy
 
 install:
   stage: install
@@ -72,7 +72,7 @@ test:
 
 amazon_s3:
   image: python:3.7.3-alpine3.10
-  stage: deploy
+  stage: pre_deploy
   variables:
     AWS_DEFAULT_REGION: eu-west-3 # The region of S3 bucket
     AWS_ACCESS_KEY_ID: ${AMAZON_S3_RESUME_WR_ACCESS_KEY_ID}
@@ -98,7 +98,7 @@ deploy-image-branches:
   variables:
     DOCKER_DRIVER: overlay2
     DOCKER_REGISTRY: ${CI_REGISTRY_IMAGE}
-  stage: deploy
+  stage: pre_deploy
   before_script:
     - docker login registry.gitlab.com -u ${REGISTRY_GITLAB_USER} -p ${REGISTRY_GITLAB_PASS}
     - apk add --no-cache bash curl gawk git sed util-linux pciutils usbutils coreutils binutils findutils grep
@@ -147,7 +147,7 @@ performance:
       - $CI_PROJECT_PATH == "patricioperpetua/web"
 
 pages:
-  stage: post_deploy
+  stage: deploy
   script:
     - mkdir -p public/reports/sitespeed || true
     - cp -r dist/dist-root/**/* public || true
