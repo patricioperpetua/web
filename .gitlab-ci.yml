@@ -150,8 +150,8 @@ pages:
   stage: deploy
   script:
     - mkdir -p public/reports/sitespeed || true
-    - cp -r dist/dist-root/**/* public || true
-    - cp -r sitespeed-results/**/* public/reports/sitespeed || true
+    - cp -r dist/dist-root/* public || true
+    - cp -r sitespeed-results/* public/reports/sitespeed || true
     - ls -R public
   artifacts:
     name: "$CI_PROJECT_NAME-${CI_COMMIT_REF_NAME}"
