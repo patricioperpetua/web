@@ -16,9 +16,9 @@ stages:
   - lint
   - build
   - test
-  - pages
   - deploy
   - performance
+  - post_deploy
 
 install:
   stage: install
@@ -70,20 +70,6 @@ test:
   except:
     - schedules
 
-pages:
-  stage: pages
-  script:
-    - mkdir public
-    - cp -r dist/dist-root/* public
-  artifacts:
-    name: "$CI_PROJECT_NAME-${CI_COMMIT_REF_NAME}"
-    paths:
-      - public
-  only:
-  - master
-  except:
-    - schedules
-
 amazon_s3:
   image: python:3.7.3-alpine3.10
   stage: deploy
@@ -97,7 +83,8 @@ amazon_s3:
   script:
     - ./scripts/uploader_amazon_s3.sh
   cache:
-    paths: []
+    paths:
+      - dist/
   except:
     - schedules
   only:
@@ -124,7 +111,8 @@ deploy-image-branches:
     - ./scripts/generate_docker_image.sh ${DOCKER_REGISTRY} ${DOCKER_IMAGE_TAG} ${CI_COMMIT_SHA} 1
   when: on_success
   cache:
-    paths: []
+    paths:
+      - dist/
   except:
     - schedules
   only:
@@ -151,7 +139,23 @@ performance:
     reports:
       performance: performance.json
   cache:
-    paths: []
+    paths:
+      - sitespeed-results/
+      - dist/
   only:
     variables:
       - $CI_PROJECT_PATH == "patricioperpetua/resume"
+
+pages:
+  stage: post_deploy
+  script:
+    - mkdir -p public/reports/sitespeed || true
+    - cp -r dist/dist-root/* public || true
+    - cp -r sitespeed-results/**/* public/reports/sitespeed || true
+    - ls -R public
+  artifacts:
+    name: "$CI_PROJECT_NAME-${CI_COMMIT_REF_NAME}"
+    paths:
+      - public
+  only:
+  - master
