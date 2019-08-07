@@ -6,7 +6,7 @@ variables:
 cache:
   paths:
     - node_modules/
-    - dist/
+    - dist/dist/
 
 before_script:
   - npm install -g @angular/cli@7.3.8 --no-optional
@@ -17,7 +17,7 @@ stages:
   - build
   - test
   - pre_deploy
-  - performance
+  - analysis
   - deploy
 
 install:
@@ -43,10 +43,8 @@ build:
     - rm -rf dist/
     - ng build --prod --build-optimizer
     - mv dist/dist dist/dist-root
-    - mkdir public
-    - cp -r dist/dist-root/* public
   artifacts:
-    name: "$CI_PROJECT_NAME-${CI_COMMIT_REF_NAME}"
+    name: "$CI_PROJECT_NAME-${CI_COMMIT_REF_NAME}-built"
     paths:
       - dist
   except:
@@ -82,9 +80,6 @@ amazon_s3:
     - pip install awscli # Install the SDK
   script:
     - ./scripts/uploader_amazon_s3.sh
-  cache:
-    paths:
-      - dist/
   except:
     - schedules
   only:
@@ -110,9 +105,6 @@ deploy-image-branches:
       fi
     - ./scripts/generate_docker_image.sh ${DOCKER_REGISTRY} ${DOCKER_IMAGE_TAG} ${CI_COMMIT_SHA} 1
   when: on_success
-  cache:
-    paths:
-      - dist/
   except:
     - schedules
   only:
@@ -120,7 +112,7 @@ deploy-image-branches:
       - $CI_PROJECT_PATH == "patricioperpetua/web"
 
 performance:
-  stage: performance
+  stage: analysis
   image: docker:git
   variables:
     URL: https://patricioperpetua.com
@@ -134,6 +126,7 @@ performance:
     - docker run --shm-size=1g --rm -v "$(pwd)":/sitespeed.io sitespeedio/sitespeed.io:6.3.1 --plugins.add ./gitlab-exporter --outputFolder sitespeed-results $URL
     - mv sitespeed-results/data/performance.json performance.json
   artifacts:
+    name: "$CI_PROJECT_NAME-${CI_COMMIT_REF_NAME}-sitespeed"
     paths:
       - sitespeed-results/
     reports:
@@ -146,12 +139,27 @@ performance:
     variables:
       - $CI_PROJECT_PATH == "patricioperpetua/web"
 
+bundle:
+  stage: analysis
+  script:
+    - rm -rf dist/dist
+    - npm run analyze-bundle
+    - mkdir -p dist/bundle
+    - mv dist/dist/stats.json dist/bundle/stats.json
+    - rm -rf dist/dist
+  artifacts:
+    name: "$CI_PROJECT_NAME-${CI_COMMIT_REF_NAME}"
+    paths:
+      - dist/bundle/stats.json
+
 pages:
   stage: deploy
   script:
-    - mkdir -p public/reports/sitespeed || true
+    - mkdir -p public/reports/sitespeed
+    - mkdir -p public/reports/bundle
     - cp -r dist/dist-root/* public || true
     - cp -r sitespeed-results/* public/reports/sitespeed || true
+    - cp dist/bundle/stats.json public/reports/bundle/stats.json || true
     - ls -R public
   artifacts:
     name: "$CI_PROJECT_NAME-${CI_COMMIT_REF_NAME}"
