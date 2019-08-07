@@ -150,7 +150,7 @@ pages:
   stage: post_deploy
   script:
     - mkdir -p public/reports/sitespeed || true
-    - cp -r dist/dist-root/* public || true
+    - cp -r dist/dist-root/**/* public || true
     - cp -r sitespeed-results/**/* public/reports/sitespeed || true
     - ls -R public
   artifacts:
