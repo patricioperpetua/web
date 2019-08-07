@@ -97,7 +97,7 @@ deploy-image-branches:
     - docker:dind
   variables:
     DOCKER_DRIVER: overlay2
-    DOCKER_REGISTRY: 'registry.gitlab.com/patricioperpetua/web'
+    DOCKER_REGISTRY: ${CI_REGISTRY_IMAGE}
   stage: deploy
   before_script:
     - docker login registry.gitlab.com -u ${REGISTRY_GITLAB_USER} -p ${REGISTRY_GITLAB_PASS}
@@ -144,7 +144,7 @@ performance:
       - dist/
   only:
     variables:
-      - $CI_PROJECT_PATH == "patricioperpetua/resume"
+      - $CI_PROJECT_PATH == "patricioperpetua/web"
 
 pages:
   stage: post_deploy
