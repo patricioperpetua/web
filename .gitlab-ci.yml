@@ -86,6 +86,8 @@ amason_s3:
     - pip install awscli # Install the SDK
   script:
     - ./scripts/uploader_amazon_s3.sh
+  cache:
+    paths: []
 
 deploy-image-branches:
   image: docker:latest
@@ -106,9 +108,11 @@ deploy-image-branches:
       fi
     - ./scripts/generate_docker_image.sh ${DOCKER_REGISTRY} ${DOCKER_IMAGE_TAG} ${CI_COMMIT_SHA} 1
   when: on_success
+  cache:
+    paths: []
 
 performance:
-  stage: install
+  stage: performance
   image: docker:git
   variables:
     URL: https://patricioperpetua.com
@@ -120,12 +124,11 @@ performance:
     - wget -O ./gitlab-exporter/index.js https://gitlab.com/gitlab-org/gl-performance/raw/master/index.js
     - mkdir sitespeed-results
     - docker run --shm-size=1g --rm -v "$(pwd)":/sitespeed.io sitespeedio/sitespeed.io:6.3.1 --plugins.add ./gitlab-exporter --outputFolder sitespeed-results $URL
-    - ls .
-    - ls sitespeed-results
-    - ls sitespeed-results/data
     - mv sitespeed-results/data/performance.json performance.json
   artifacts:
     paths:
       - sitespeed-results/
     reports:
       performance: performance.json
+  cache:
+    paths: []
