@@ -25,6 +25,8 @@ install:
   before_script: []
   script:
     - npm install --no-optional
+  except:
+    - schedules
 
 lint:
   stage: lint
@@ -32,6 +34,8 @@ lint:
     - ng lint
     - npm audit
   allow_failure: true
+  except:
+    - schedules
 
 build:
   stage: build
@@ -45,6 +49,8 @@ build:
     name: "$CI_PROJECT_NAME-${CI_COMMIT_REF_NAME}"
     paths:
       - dist
+  except:
+    - schedules
 
 test:
   before_script:
@@ -61,6 +67,8 @@ test:
     - echo test
     # - ng test
     # - ng e2e
+  except:
+    - schedules
 
 pages:
   stage: pages
@@ -73,8 +81,10 @@ pages:
       - public
   only:
   - master
+  except:
+    - schedules
 
-amason_s3:
+amazon_s3:
   image: python:3.7.3-alpine3.10
   stage: deploy
   variables:
@@ -88,6 +98,11 @@ amason_s3:
     - ./scripts/uploader_amazon_s3.sh
   cache:
     paths: []
+  except:
+    - schedules
+  only:
+    variables:
+      - $CI_PROJECT_PATH == "patricioperpetua/web"
 
 deploy-image-branches:
   image: docker:latest
@@ -110,6 +125,11 @@ deploy-image-branches:
   when: on_success
   cache:
     paths: []
+  except:
+    - schedules
+  only:
+    variables:
+      - $CI_PROJECT_PATH == "patricioperpetua/web"
 
 performance:
   stage: performance
@@ -132,3 +152,6 @@ performance:
       performance: performance.json
   cache:
     paths: []
+  only:
+    variables:
+      - $CI_PROJECT_PATH == "patricioperpetua/resume"
