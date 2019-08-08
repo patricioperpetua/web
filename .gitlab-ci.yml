@@ -13,7 +13,7 @@ before_script:
 
 stages:
   - install
-  - lint
+  - test_static
   - build
   - test
   - pre_deploy
@@ -29,10 +29,26 @@ install:
     - schedules
 
 lint:
-  stage: lint
+  stage: test_static
   script:
     - ng lint
     - npm audit
+  allow_failure: true
+  except:
+    - schedules
+
+audit:
+  stage: test_static
+  script:
+    - npm audit
+  allow_failure: true
+  except:
+    - schedules
+
+npm-check:
+  stage: test_static
+  script:
+    - ng run check
   allow_failure: true
   except:
     - schedules
