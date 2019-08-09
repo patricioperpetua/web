@@ -11,6 +11,7 @@
     "lint": "ng lint",
     "e2e": "ng e2e",
     "analyze-bundle": "ng build --stats-json",
+    "analyze-pwmetrics": "pwmetrics --config=conf/pwmetrics/conf-pwmetrics.js",
     "docker-generate": "./scripts/generate_docker_image.sh y",
     "docker-run": "./scripts/run_docker_compose.sh"
   },
