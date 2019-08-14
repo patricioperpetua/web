@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 import * as S3 from 'aws-sdk/clients/s3';
-import * as AWS from 'aws-sdk/global';
 import { Observable, of } from 'rxjs';
 import { Files } from './files-model';
 
@@ -11,8 +10,6 @@ export class AwsServiceService {
 
   FOLDER = 'resume';
   BUCKET = ''; // environment.bucket;
-
-  constructor() { }
 
   private static getS3Bucket(): any {
     const bucket = new S3(

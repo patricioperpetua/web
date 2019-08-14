@@ -1,12 +1,10 @@
 // tslint:disable: no-implicit-dependencies
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
-import { HttpClient } from '@angular/common/http';
 import { Component } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
 import { GoogleAnalyticsService } from '@app/services/google-analytics/google-analytics.service';
 import { LanguageService } from '@app/services/language/language.service';
 import { PathService } from '@app/services/path-service/path.service';
-import { TranslateService } from '@ngx-translate/core';
 import { NGXLogger } from 'ngx-logger';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { filter, map } from 'rxjs/operators';
@@ -29,8 +27,6 @@ export class NavbarComponent {
   constructor(private readonly breakpointObserver: BreakpointObserver
             , public  readonly logger: NGXLogger
             , router: Router
-            , translate: TranslateService
-            , http: HttpClient
             , private readonly pathService: PathService
             , private readonly googleService: GoogleAnalyticsService
             , private readonly language: LanguageService) {

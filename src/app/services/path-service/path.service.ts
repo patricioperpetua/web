@@ -4,7 +4,7 @@ import { MatSnackBar } from '@angular/material';
 import { NavigationEnd, Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import { NGXLogger } from 'ngx-logger';
-import { BehaviorSubject, forkJoin, of } from 'rxjs';
+import { BehaviorSubject, forkJoin } from 'rxjs';
 import { filter } from 'rxjs/operators';
 import { LanguageService } from '../language/language.service';
 
@@ -36,7 +36,7 @@ export class PathService {
 
   constructor(private readonly langService: LanguageService
             , http: HttpClient
-            , private readonly logger: NGXLogger
+            , logger: NGXLogger
             , private readonly snackBar: MatSnackBar
             , private readonly translate: TranslateService
             , private readonly router: Router) {
