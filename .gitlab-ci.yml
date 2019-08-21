@@ -80,7 +80,7 @@ amazon_s3:
     - schedules
   only:
     variables:
-      - $CI_PROJECT_PATH == "${ORIGINAL_REPOSITORY}"
+      - $CI_PROJECT_PATH == $ORIGINAL_REPOSITORY
 
 deploy-image-branches:
   image: docker:latest
@@ -126,7 +126,7 @@ performance:
       performance: performance.json
   only:
     variables:
-      - $CI_PROJECT_PATH == "${ORIGINAL_REPOSITORY}"
+      - $CI_PROJECT_PATH == $ORIGINAL_REPOSITORY
       - $TRIGGER_EXECUTION == "DAILY"
 
 pwmetrics:
@@ -141,7 +141,7 @@ pwmetrics:
     - npm run analyze-pwmetrics
   only:
     variables:
-      - $CI_PROJECT_PATH == "${ORIGINAL_REPOSITORY}"
+      - $CI_PROJECT_PATH == $ORIGINAL_REPOSITORY
       - $TRIGGER_EXECUTION == "DAILY"
 
 bundle:
