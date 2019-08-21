@@ -48,3 +48,6 @@ Thumbs.db
 
 # Files from the server.
 src/assets/resume
+
+/sonar-scanner-*/
+/.scannerwork/

@@ -31,8 +31,7 @@ install:
 lint:
   stage: test_static
   script:
-    - ng lint
-    - npm audit
+    - npm run lint
   allow_failure: true
   except:
     - schedules
@@ -48,7 +47,7 @@ audit:
 npm-check:
   stage: test_static
   script:
-    - ng run check
+    - npm run check
   allow_failure: true
   except:
     - schedules
@@ -154,6 +153,22 @@ performance:
   only:
     variables:
       - $CI_PROJECT_PATH == "patricioperpetua/web"
+      - $TRIGGER_EXECUTION == ""
+
+pwmetrics:
+  stage: analysis
+  image: registry.gitlab.com/singletonsd/docker/puppeteer
+  before_script:
+    - mkdir -p ~/.credentials
+    - echo "${GOOGLE_SHEETS_CREDENTIALS}" > ~/.credentials/sheets.googleapis.com-nodejs-pwmetrics.json
+    - echo ${REGISTRY_GITLAB_USER} > ~/.credentials/sheets.googleapis.com-nodejs-pwmetrics.json
+  script:
+    - npm i
+    - npm run analyze-pwmetrics
+  only:
+    variables:
+      - $CI_PROJECT_PATH == "patricioperpetua/web"
+      - $TRIGGER_EXECUTION == "DAILY"
 
 bundle:
   stage: analysis
