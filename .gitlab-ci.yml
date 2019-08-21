@@ -1,15 +1,14 @@
-image: node:8-alpine
+image: "${GLOBAL_IMAGE_NAME}:${GLOBAL_IMAGE_TAG}"
 
 variables:
-  CURRENT_BRANCH: ${CI_COMMIT_REF_NAME}
+  GLOBAL_IMAGE_NAME: "node"
+  GLOBAL_IMAGE_TAG: "8-alpine"
+  TEST_STATIC_ALL: "true"
+  ORIGINAL_REPOSITORY: patricioperpetua/web
 
-cache:
-  paths:
-    - node_modules/
-    - dist/dist/
-
-before_script:
-  - npm install -g @angular/cli@7.3.8 --no-optional
+include:
+  - project: 'singletonsd/pipelines/npm'
+    file: '/src/.gitlab-ci-test-static.yml'
 
 stages:
   - install
@@ -27,36 +26,18 @@ install:
     - npm install --no-optional
   except:
     - schedules
-
-lint:
-  stage: test_static
-  script:
-    - npm run lint
-  allow_failure: true
-  except:
-    - schedules
-
-audit:
-  stage: test_static
-  script:
-    - npm audit
-  allow_failure: true
-  except:
-    - schedules
-
-npm-check:
-  stage: test_static
-  script:
-    - npm run check
-  allow_failure: true
-  except:
-    - schedules
+  cache:
+    paths:
+      - node_modules/
+  artifacts:
+    paths:
+      - node_modules/
 
 build:
   stage: build
   script:
     - rm -rf dist/
-    - ng build --prod --build-optimizer
+    - npm run build
     - mv dist/dist dist/dist-root
   artifacts:
     name: "$CI_PROJECT_NAME-${CI_COMMIT_REF_NAME}-built"
@@ -99,7 +80,7 @@ amazon_s3:
     - schedules
   only:
     variables:
-      - $CI_PROJECT_PATH == "patricioperpetua/web"
+      - $CI_PROJECT_PATH == "${ORIGINAL_REPOSITORY}"
 
 deploy-image-branches:
   image: docker:latest
@@ -122,9 +103,6 @@ deploy-image-branches:
   when: on_success
   except:
     - schedules
-  only:
-    variables:
-      - $CI_PROJECT_PATH == "patricioperpetua/web"
 
 performance:
   stage: analysis
@@ -146,14 +124,10 @@ performance:
       - sitespeed-results/
     reports:
       performance: performance.json
-  cache:
-    paths:
-      - sitespeed-results/
-      - dist/
   only:
     variables:
-      - $CI_PROJECT_PATH == "patricioperpetua/web"
-      - $TRIGGER_EXECUTION == ""
+      - $CI_PROJECT_PATH == "${ORIGINAL_REPOSITORY}"
+      - $TRIGGER_EXECUTION == "DAILY"
 
 pwmetrics:
   stage: analysis
@@ -167,7 +141,7 @@ pwmetrics:
     - npm run analyze-pwmetrics
   only:
     variables:
-      - $CI_PROJECT_PATH == "patricioperpetua/web"
+      - $CI_PROJECT_PATH == "${ORIGINAL_REPOSITORY}"
       - $TRIGGER_EXECUTION == "DAILY"
 
 bundle:

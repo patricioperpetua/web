@@ -1,0 +1,2 @@
+pwmetrics/pwmetrics-config.js filter=git-crypt diff=git-crypt
+sonarqube/sonar-project.properties filter=git-crypt diff=git-crypt

@@ -3,10 +3,10 @@
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
-    "check": "npm-check -i @components* -i @services* -i @env -i @angular*",
+    "check": "npm-check -i @components/* -i @services/* -i @env --skip-unused",
     "start": "ng serve",
-    "static": "npm run build && ./node_modules/.bin/static dist/dist",
-    "build": "ng build --prod",
+    "static": "npm run build && static dist/dist",
+    "build": "ng build --prod --build-Optimizer",
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",
