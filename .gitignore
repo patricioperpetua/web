@@ -51,3 +51,5 @@ src/assets/resume
 
 /sonar-scanner-*/
 /.scannerwork/
+
+binaries

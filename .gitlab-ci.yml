@@ -17,7 +17,7 @@ stages:
   - install
   - test_static
   - build
-  - test
+  - test_dynamic
   - pre_deploy
   - analysis
   - deploy
