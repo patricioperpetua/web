@@ -23,11 +23,6 @@ stages:
   - analysis
   - deploy
 
-not_test:
-  stage: install
-  script:
-    - echo "$NG_APP_AWS_S3_REGION"
-
 performance:
   stage: analysis
   image: docker:git
