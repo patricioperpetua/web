@@ -8,8 +8,6 @@
     "static": "npm run build && static dist/dist",
     "build": "ng build --prod --build-Optimizer",
     "build-all": "npm run build && mv dist/dist dist/dist-root",
-    "deploy": "npm run deploy-aws-s3",
-    "deploy-aws-s3": "./scripts/uploader_amazon_s3.sh",
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",

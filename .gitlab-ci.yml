@@ -1,4 +1,6 @@
-image: "${GLOBAL_IMAGE_NAME}:${GLOBAL_IMAGE_TAG}"
+include:
+  - project: 'singletonsd/pipelines/angular'
+    file: '/src/.gitlab-ci-app.yml'
 
 variables:
   GLOBAL_IMAGE_NAME: "node"
@@ -9,10 +11,6 @@ variables:
   NG_APP_AWS_S3_REGION: eu-west-3
   NG_APP_AWS_S3_ACCESS_KEY_ID: ${AMAZON_S3_RESUME_WR_ACCESS_KEY_ID}
   NG_APP_AWS_S3_SECRET_ACCESS_KEY: ${AMAZON_S3_RESUME_WR_SECRET_ACCESS_KEY}
-
-include:
-  - project: 'singletonsd/pipelines/angular'
-    file: '/src/.gitlab-ci-app.yml'
 
 stages:
   - install
@@ -37,10 +35,12 @@ performance:
     - mkdir sitespeed-results
     - docker run --shm-size=1g --rm -v "$(pwd)":/sitespeed.io sitespeedio/sitespeed.io:6.3.1 --plugins.add ./gitlab-exporter --outputFolder sitespeed-results $URL
     - mv sitespeed-results/data/performance.json performance.json
+    - mkdir -p dist/sitespeed
+    - mv -r sitespeed-results dist/sitespeed
   artifacts:
     name: "$CI_PROJECT_NAME-${CI_COMMIT_REF_NAME}-sitespeed"
     paths:
-      - sitespeed-results/
+      - dist
     reports:
       performance: performance.json
   only:
@@ -74,20 +74,4 @@ bundle:
   artifacts:
     name: "$CI_PROJECT_NAME-${CI_COMMIT_REF_NAME}"
     paths:
-      - dist/bundle/stats.json
-
-pages:
-  stage: deploy
-  script:
-    - mkdir -p public/reports/sitespeed
-    - mkdir -p public/reports/bundle
-    - cp -r dist/dist-root/* public || true
-    - cp -r sitespeed-results/* public/reports/sitespeed || true
-    - cp dist/bundle/stats.json public/reports/bundle/stats.json || true
-    - ls -R public
-  artifacts:
-    name: "$CI_PROJECT_NAME-${CI_COMMIT_REF_NAME}"
-    paths:
-      - public
-  only:
-  - master
+      - dist
