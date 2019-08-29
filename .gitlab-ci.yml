@@ -1,4 +1,4 @@
-image: "${GLOBAL_IMAGE_NAME}:${GLOBAL_IMAGE_NAME}"
+image: "${GLOBAL_IMAGE_NAME}:${GLOBAL_IMAGE_TAG}"
 
 include:
   - project: 'singletonsd/pipelines/angular'
