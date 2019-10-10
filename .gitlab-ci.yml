@@ -1,5 +1,6 @@
 image: "${GLOBAL_IMAGE_NAME}:${GLOBAL_IMAGE_TAG}"
 
+# https://gitlab.com/singletonsd/pipelines/angular
 include:
   - project: 'singletonsd/pipelines/angular'
     file: '/src/.gitlab-ci-app.yml'

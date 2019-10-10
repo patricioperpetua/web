@@ -29,11 +29,16 @@ function usage(){
 }
 
 TAG=latest
-NAME=registry.gitlab.com/patricioperpetua/web
+NAME=registry.gitlab.com/ravimosharksas/frontends/office
 DOCKERFILE=from_assets
 CI_COMMIT_SHA=$(git rev-parse HEAD | cut -c 1-8)
 PUSH=0
 ASSET_FOLDER="dist-root"
+
+if [ ! -z ${DOCKER_IMAGE_BASE_NAME+x} ]; then
+  BASENAME=${DOCKER_IMAGE_BASE_NAME}
+fi
+
 if [ $# -lt 3 ]; then
   echo -e "Illegal number of parameters"
   echo -e "$(usage)"
@@ -66,9 +71,12 @@ else
     fi
 fi
 
-export DATE="$(date --rfc-2822 | sed 's/ /T/; s/\(\....\).*-/\1-/g')"
+DATE="$(date --rfc-2822 | sed 's/ /T/; s/\(\....\).*-/\1-/g')"
 
-  docker build --rm -f docker/${DOCKERFILE}/Dockerfile -t \
+rm -f .dockerignore
+ln -fs docker/${DOCKERFILE}/.dockerignore .dockerignore
+
+docker build --rm -f docker/${DOCKERFILE}/Dockerfile -t \
     ${NAME}:${TAG} \
     --label "version=${TAG}" \
     --label "vcs-ref=${CI_COMMIT_SHA}" \

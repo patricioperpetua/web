@@ -1,0 +1,9 @@
+dist
+e2e
+node_modules
+scripts
+test
+.gitignore
+.gitlab-ci.yml
+docker-compose.yaml
+*.md

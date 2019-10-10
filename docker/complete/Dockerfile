@@ -3,7 +3,7 @@ FROM node:8.12.0-alpine
 LABEL mainteiner="Patricio Perpetua <patricio.perpetua.arg@gmail.com>" \
     name="patricioperpetua/web" \
     architecture="x86_64" \
-    vendor="SINGLETON" \
+    vendor="SINGLETON SD" \
     vcs-type="git" \
     vcs-url="https://gitlab.com/patricioperpetua/web.git" \
     distribution-scope="private" \
@@ -35,10 +35,10 @@ FROM nginx:1.13.3-alpine
 ## Remove default nginx website
 RUN rm -rf /usr/share/nginx/html/*
 
-#COPY nginx /etc/nginx/conf.d/
+COPY conf/nginx/nginx.config /etc/nginx/conf.d/default.conf
 
 ## From 'builder' stage copy over the artifacts in dist folder to default nginx public folder
-COPY --from=0 /usr/app/dist/* /usr/share/nginx/html
+COPY --from=0 /usr/app/dist /usr/share/nginx/html
 
 EXPOSE 80
 
